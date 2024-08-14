@@ -12,11 +12,28 @@
     alice_physical_parameters_file
     alice_visual_parameters_file
 
+    alice_robot_ip
+    alice_reverse_port
+    alice_script_sender_port 
+    alice_script_command_port
+    alice_trajectory_port
+
     bob_ur_type
     bob_joint_limits_parameters_file
     bob_kinematics_parameters_file
     bob_physical_parameters_file
     bob_visual_parameters_file
+
+    bob_robot_ip
+    bob_reverse_port
+    bob_script_sender_port 
+    bob_script_command_port
+    bob_trajectory_port
+
+    script_filename
+    output_recipe_filename
+    input_recipe_filename
+    headless_mode:=false
     ">
 
     <joint name="table_base_joint" type="fixed">
@@ -105,6 +122,15 @@
       kinematics_parameters_file="${alice_kinematics_parameters_file}"
       physical_parameters_file="${alice_physical_parameters_file}"
       visual_parameters_file="${alice_visual_parameters_file}"
+      robot_ip="${alice_robot_ip}"
+      reverse_port="${alice_reverse_port}"
+      script_sender_port="${alice_script_sender_port}"
+      script_command_port="${alice_script_command_port}"
+      trajectory_port="${alice_trajectory_port}"
+      script_filename="${script_filename}"
+      output_recipe_filename="${output_recipe_filename}"
+      input_recipe_filename="${input_recipe_filename}"
+      headless_mode="${headless_mode}"
     >
       <origin xyz="0 0 0" rpy="0 0 0" />
     </xacro:ur_robot>
@@ -118,6 +144,15 @@
       kinematics_parameters_file="${bob_kinematics_parameters_file}"
       physical_parameters_file="${bob_physical_parameters_file}"
       visual_parameters_file="${bob_visual_parameters_file}"
+      robot_ip="${bob_robot_ip}"
+      reverse_port="${bob_reverse_port}"
+      script_sender_port="${bob_script_sender_port}"
+      script_command_port="${bob_script_command_port}"
+      trajectory_port="${bob_trajectory_port}"
+      script_filename="${script_filename}"
+      output_recipe_filename="${output_recipe_filename}"
+      input_recipe_filename="${input_recipe_filename}"
+      headless_mode="${headless_mode}"
     >
       <origin xyz="0 0 0" rpy="0 0 0" />
     </xacro:ur_robot>

@@ -7,8 +7,10 @@ from launch_ros.substitutions import FindPackageShare
 
 def generate_launch_description():
     description_package = FindPackageShare("my_dual_robot_cell_description")
+    control_package = FindPackageShare("my_dual_robot_cell_control")
+
     description_file = PathJoinSubstitution(
-        [description_package, "urdf", "my_dual_robot_cell.urdf.xacro"]
+        [control_package, "urdf", "my_dual_robot_cell_controlled.urdf.xacro"]
     )
     rvizconfig_file = PathJoinSubstitution([description_package, "rviz", "urdf.rviz"])
 
@@ -19,10 +21,10 @@ def generate_launch_description():
                 description_file,
                 " ",
                 "alice_ur_type:=",
-                "ur3",
+                "ur5",
                 " ",
                 "bob_ur_type:=",
-                "ur3",
+                "ur5",
             ]
         ),
         value_type=str,

@@ -91,7 +91,7 @@ def generate_launch_description():
                 "ur20",
                 "ur30",
             ],
-            default_value="ur3",
+            default_value="ur5",
         )
     )
     declared_arguments.append(
@@ -109,20 +109,20 @@ def generate_launch_description():
                 "ur20",
                 "ur30",
             ],
-            default_value="ur3",
+            default_value="ur5",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "alice_robot_ip",
-            default_value="192.168.0.101",
+            default_value="192.168.56.102",
             description="IP address by which the robot can be reached.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "bob_robot_ip",
-            default_value="192.168.0.100",
+            default_value="192.168.56.101",
             description="IP address by which the robot can be reached.",
         )
     )
@@ -199,5 +199,6 @@ def generate_launch_description():
                 output="both",
                 parameters=[robot_description],
             ),
+            
         ]
     )

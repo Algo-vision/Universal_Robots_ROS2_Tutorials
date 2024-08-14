@@ -1,23 +1,37 @@
-from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
-from launch.conditions import IfCondition, UnlessCondition
-from launch.launch_description_sources import AnyLaunchDescriptionSource
-from launch.substitutions import LaunchConfiguration, PathJoinSubstitution
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterFile
 from launch_ros.substitutions import FindPackageShare
+
+from launch import LaunchDescription
+from launch.actions import DeclareLaunchArgument, OpaqueFunction
+from launch.conditions import IfCondition, UnlessCondition
 from launch.substitutions import Command, FindExecutable, LaunchConfiguration, PathJoinSubstitution
+from ament_index_python.packages import get_package_share_directory
+import launch_ros.descriptions
 
+import yaml
+import os
+def load_yaml(package_name, file_path):
+    package_path = get_package_share_directory(package_name)
+    absolute_file_path = os.path.join(package_path, file_path)
 
-def launch_setup():
-    # Initialize Arguments
+    try:
+        with open(absolute_file_path) as file:
+            return yaml.safe_load(file)
+    except OSError:  # parent of IOError, OSError *and* WindowsError where available
+        return None
+def launch_setup(context,*args,**kwargs):
     alice_ur_type = LaunchConfiguration("alice_ur_type")
     bob_ur_type = LaunchConfiguration("bob_ur_type")
 
     alice_robot_ip = LaunchConfiguration("alice_robot_ip")
     bob_robot_ip = LaunchConfiguration("bob_robot_ip")
 
-    # General arguments
+    alice_use_mock_hardware = LaunchConfiguration("alice_use_mock_hardware")
+    alice_mock_sensor_commands = LaunchConfiguration("alice_mock_sensor_commands")
+    bob_use_mock_hardware = LaunchConfiguration("bob_use_mock_hardware")
+    bob_mock_sensor_commands = LaunchConfiguration("bob_mock_sensor_commands")
+     # General arguments
     controllers_file = LaunchConfiguration("controllers_file")
     controller_spawner_timeout = LaunchConfiguration("controller_spawner_timeout")
     description_launchfile = LaunchConfiguration("description_launchfile")
@@ -38,15 +52,71 @@ def launch_setup():
     bob_activate_joint_controller = LaunchConfiguration("bob_activate_joint_controller")
     bob_launch_dashboard_client = LaunchConfiguration("bob_launch_dashboard_client")
 
+    headless_mode = LaunchConfiguration("headless_mode")
+
+    alice_kinematics_parameters_file = LaunchConfiguration(
+        "alice_kinematics_parameters_file"
+    )
+    bob_kinematics_parameters_file = LaunchConfiguration(
+        "bob_kinematics_parameters_file"
+    )
+    robot_description_content = Command(
+        [
+            PathJoinSubstitution([FindExecutable(name="xacro")]),
+            " ",
+            PathJoinSubstitution(
+                [
+                    FindPackageShare("my_dual_robot_cell_control"),
+                    "urdf",
+                    "my_dual_robot_cell_controlled.urdf.xacro",
+                ]
+            ),
+            " ",
+            "alice_robot_ip:=",
+            alice_robot_ip,
+            " ",
+            "bob_robot_ip:=",
+            bob_robot_ip,
+            " ",
+            "alice_ur_type:=",
+            alice_ur_type,
+            " ",
+            "bob_ur_type:=",
+            bob_ur_type,
+            " ",
+            "alice_use_mock_hardware:=",
+            alice_use_mock_hardware,
+            " ",
+            "bob_use_mock_hardware:=",
+            bob_use_mock_hardware,
+            " ",
+            "alice_kinematics_parameters_file:=",
+            alice_kinematics_parameters_file,
+            " ",
+            "bob_kinematics_parameters_file:=",
+            bob_kinematics_parameters_file,
+            " ",
+            "alice_mock_sensor_commands:=",
+            alice_mock_sensor_commands,
+            " ",
+            "bob_mock_sensor_commands:=",
+            bob_mock_sensor_commands,
+            " ",
+            "headless_mode:=",
+            headless_mode,
+        ]
+    )
+    robot_description = {"robot_description": robot_description_content}
+
+
     # Single controller manager comprising of controllers for both arms
     control_node = Node(
-        package="controller_manager",
-        executable="ros2_control_node",
+        package="ur_robot_driver",
+        executable="ur_ros2_control_node",
         parameters=[
+            robot_description,
             LaunchConfiguration("update_rate_config_file"),
             ParameterFile(controllers_file, allow_substs=True),
-            # We use the tf_prefix as substitution in there, so that's why we keep it as an
-            # argument for this launchfile
         ],
         output="screen",
     )
@@ -73,14 +143,12 @@ def launch_setup():
         emulate_tty=True,
         parameters=[{"robot_ip": bob_robot_ip}],
     )
-
     alice_urscript_interface = Node(
         package="ur_robot_driver",
         executable="urscript_interface",
         namespace="alice",
         parameters=[{"robot_ip": alice_robot_ip}],
         output="screen",
-        condition=UnlessCondition(alice_use_mock_hardware),
     )
 
     bob_urscript_interface = Node(
@@ -89,53 +157,13 @@ def launch_setup():
         namespace="bob",
         parameters=[{"robot_ip": bob_robot_ip}],
         output="screen",
-        condition=UnlessCondition(bob_use_mock_hardware),
     )
-
-    alice_controller_stopper_node = Node(
-        package="ur_robot_driver",
-        executable="controller_stopper_node",
-        namespace="alice",
-        name="controller_stopper",
-        output="screen",
-        emulate_tty=True,
-        condition=UnlessCondition(alice_use_mock_hardware),
-        parameters=[
-            {"headless_mode": headless_mode},
-            {"joint_controller_active": alice_activate_joint_controller},
-            {
-                "consistent_controllers": [
-                    "alice_io_and_status_controller",
-                    "alice_force_torque_sensor_broadcaster",
-                    "alice_joint_state_broadcaster",
-                    "alice_speed_scaling_state_broadcaster",
-                ]
-            },
-        ],
+    robot_state_publisher_node = Node(
+        package="robot_state_publisher",
+        executable="robot_state_publisher",
+        output="both",
+        parameters=[robot_description],
     )
-
-    bob_controller_stopper_node = Node(
-        package="ur_robot_driver",
-        executable="controller_stopper_node",
-        namespace="bob",
-        name="controller_stopper",
-        output="screen",
-        emulate_tty=True,
-        condition=UnlessCondition(bob_use_mock_hardware),
-        parameters=[
-            {"headless_mode": headless_mode},
-            {"joint_controller_active": bob_activate_joint_controller},
-            {
-                "consistent_controllers": [
-                    "bob_io_and_status_controller",
-                    "bob_force_torque_sensor_broadcaster",
-                    "bob_joint_state_broadcaster",
-                    "bob_speed_scaling_state_broadcaster",
-                ]
-            },
-        ],
-    )
-
     rviz_node = Node(
         package="rviz2",
         condition=IfCondition(launch_rviz),
@@ -144,8 +172,6 @@ def launch_setup():
         output="log",
         arguments=["-d", rviz_config_file],
     )
-
-    # Spawn controllers
     def controller_spawner(controllers, active=True):
         inactive_flags = ["--inactive"] if not active else []
         return Node(
@@ -160,7 +186,6 @@ def launch_setup():
             + inactive_flags
             + controllers,
         )
-
     controllers_active = [
         "alice_joint_state_broadcaster",
         "bob_joint_state_broadcaster",
@@ -175,11 +200,9 @@ def launch_setup():
         "alice_forward_position_controller",
         "bob_forward_position_controller",
     ]
-
     controller_spawners = [controller_spawner(controllers_active)] + [
         controller_spawner(controllers_inactive, active=False)
     ]
-
     # There may be other controllers of the joints, but this is the initially-started one
     alice_initial_joint_controller_spawner_started = Node(
         package="controller_manager",
@@ -231,26 +254,13 @@ def launch_setup():
         ],
         condition=UnlessCondition(bob_activate_joint_controller),
     )
-
-    rsp = IncludeLaunchDescription(
-        AnyLaunchDescriptionSource(description_launchfile),
-        launch_arguments={
-            "alice_robot_ip": alice_robot_ip,
-            "bob_robot_ip": bob_robot_ip,
-            "alice_ur_type": alice_ur_type,
-            "bob_ur_type": bob_ur_type,
-        }.items(),
-    )
-
     nodes_to_start = [
+        robot_state_publisher_node,
         control_node,
         alice_dashboard_client_node,
         bob_dashboard_client_node,
-        alice_controller_stopper_node,
-        bob_controller_stopper_node,
         alice_urscript_interface,
         bob_urscript_interface,
-        rsp,
         rviz_node,
         alice_initial_joint_controller_spawner_stopped,
         bob_initial_joint_controller_spawner_stopped,
@@ -263,7 +273,6 @@ def launch_setup():
 
 def generate_launch_description():
     declared_arguments = []
-    # UR specific arguments
     declared_arguments.append(
         DeclareLaunchArgument(
             "alice_ur_type",
@@ -279,7 +288,7 @@ def generate_launch_description():
                 "ur20",
                 "ur30",
             ],
-            default_value="ur5",
+            default_value="ur3",
         )
     )
     declared_arguments.append(
@@ -297,7 +306,7 @@ def generate_launch_description():
                 "ur20",
                 "ur30",
             ],
-            default_value="ur5",
+            default_value="ur3",
         )
     )
     declared_arguments.append(
@@ -314,7 +323,69 @@ def generate_launch_description():
             description="IP address by which the robot can be reached.",
         )
     )
-
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "alice_kinematics_parameters_file",
+            default_value=PathJoinSubstitution(
+                [
+                    FindPackageShare("my_dual_robot_cell_control"),
+                    "config",
+                    "alice_calibration.yaml",
+                ]
+            ),
+            description="The calibration configuration of the actual robot used.",
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "bob_kinematics_parameters_file",
+            default_value=PathJoinSubstitution(
+                [
+                    FindPackageShare("my_dual_robot_cell_control"),
+                    "config",
+                    "bob_calibration.yaml",
+                ]
+            ),
+            description="The calibration configuration of the actual robot used.",
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "alice_use_mock_hardware",
+            default_value="false",
+            description="Start robot with mock hardware mirroring command to its states.",
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "bob_use_mock_hardware",
+            default_value="false",
+            description="Start robot with mock hardware mirroring command to its states.",
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "alice_mock_sensor_commands",
+            default_value="false",
+            description="Enable mock command interfaces for sensors used for simple simulations. "
+            "Used only if 'use_mock_hardware' parameter is true.",
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "bob_mock_sensor_commands",
+            default_value="false",
+            description="Enable mock command interfaces for sensors used for simple simulations. "
+            "Used only if 'use_mock_hardware' parameter is true.",
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "headless_mode",
+            default_value="false",
+            description="Enable headless mode for robot control",
+        )
+    )
     # General arguments
     declared_arguments.append(
         DeclareLaunchArgument(
@@ -460,4 +531,32 @@ def generate_launch_description():
             ],
         )
     )
-    return LaunchDescription(declared_arguments + launch_setup())
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "warehouse_sqlite_path",
+            default_value=os.path.expanduser("~/.ros/warehouse_ros.sqlite"),
+            description="Path where the warehouse database should be stored",
+        )
+    )
+    declared_arguments.append(
+        DeclareLaunchArgument(
+            "moveit_config_package",
+            default_value="my_dual_robot_cell_moveit_config",
+            description="MoveIt config package with robot SRDF/XACRO files. Usually the argument "
+            "is not set, it enables use of a custom moveit config.",
+        )
+    )
+    return LaunchDescription(declared_arguments + [OpaqueFunction(function=launch_setup)])
+
+    # return LaunchDescription(
+    #     declared_arguments
+    #     + [
+    #         Node(
+    #             package="robot_state_publisher",
+    #             executable="robot_state_publisher",
+    #             output="both",
+    #             parameters=[robot_description],
+    #         ),
+            
+    #     ]
+    # )

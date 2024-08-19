@@ -36,7 +36,7 @@
     headless_mode:=false
     ">
 
-    <joint name="table_base_joint" type="fixed">
+     <!-- <joint name="table_base_joint" type="fixed">
       <xacro:insert_block name="origin" />
       <parent link="${parent}" />
       <child link="table" />
@@ -55,9 +55,9 @@
         </geometry>
         <origin rpy="0 0 0" xyz="0.75 0.5 -1"/>
       </collision>
-    </link>
+    </link> -->
 
-    <link name="monitor">
+   <!-- <link name="monitor">
       <visual>
         <geometry>
           <mesh filename="package://my_dual_robot_cell_description/meshes/171005_Motek_Monitor_L.dae"/>
@@ -68,18 +68,18 @@
           <mesh filename="package://my_dual_robot_cell_description/meshes/171005_Motek_Monitor_L.dae"/>
         </geometry>
       </collision>
-    </link>
-    <joint name="base_to_monitor" type="fixed">
-      <parent link="table"/>
+    </link>  -->
+    <!-- <joint name="base_to_monitor" type="fixed">-->
+      <!-- <parent link="table"/>
       <child link="monitor"/>
       <origin xyz="0.2 0.6 0"/>
-    </joint>
+    </joint>  -->
 
-    <material name="white">
+    <!-- <material name="white">
       <color rgba="1 1 1 1"/>
-    </material>
+    </material> -->
 
-    <link name="wall">
+    <!-- <link name="wall">
       <visual>
         <geometry>
           <mesh filename="package://my_dual_robot_cell_description/meshes/wall.dae"/>
@@ -95,11 +95,11 @@
       <parent link="table"/>
       <child link="wall"/>
       <origin xyz="1.25 1.5 0.5"/>
-    </joint>
+    </joint> -->
 
 
     <!--Creates the mounts to attach the robots to the table-->
-    <link name="alice_robot_mount"/>
+    <!-- <link name="alice_robot_mount"/>
     <joint name="base_to_alice_robot_mount" type="fixed">
       <parent link="table"/>
       <child link="alice_robot_mount"/>
@@ -111,13 +111,13 @@
       <parent link="table"/>
       <child link="bob_robot_mount"/>
       <origin xyz="1.0 0.85 0" rpy="0 0 ${pi}" />
-    </joint>
+    </joint> -->
 
-    <!--Creates the 1st Robot-->
+    Creates the 1st Robot
     <xacro:ur_robot
       name="alice"
       tf_prefix="alice_"
-      parent="alice_robot_mount"
+      parent="world"
       joint_limits_parameters_file="${alice_joint_limits_parameters_file}"
       kinematics_parameters_file="${alice_kinematics_parameters_file}"
       physical_parameters_file="${alice_physical_parameters_file}"
@@ -139,7 +139,7 @@
     <xacro:ur_robot
       name="bob"
       tf_prefix="bob_"
-      parent="bob_robot_mount"
+      parent="world"
       joint_limits_parameters_file="${bob_joint_limits_parameters_file}"
       kinematics_parameters_file="${bob_kinematics_parameters_file}"
       physical_parameters_file="${bob_physical_parameters_file}"
@@ -154,7 +154,7 @@
       input_recipe_filename="${input_recipe_filename}"
       headless_mode="${headless_mode}"
     >
-      <origin xyz="0 0 0" rpy="0 0 0" />
+      <origin xyz="0 1 0" rpy="0 0 0" />
     </xacro:ur_robot>
 
   </xacro:macro>

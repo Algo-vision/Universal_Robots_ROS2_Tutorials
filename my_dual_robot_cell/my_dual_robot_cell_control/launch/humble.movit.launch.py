@@ -8,18 +8,19 @@ from launch.conditions import IfCondition, UnlessCondition
 from launch.substitutions import Command, FindExecutable, LaunchConfiguration, PathJoinSubstitution
 from ament_index_python.packages import get_package_share_directory
 import launch_ros.descriptions
+from ur_moveit_config.launch_common import load_yaml
 
 import yaml
 import os
-def load_yaml(package_name, file_path):
-    package_path = get_package_share_directory(package_name)
-    absolute_file_path = os.path.join(package_path, file_path)
+# def load_yaml(package_name, file_path):
+#     package_path = get_package_share_directory(package_name)
+#     absolute_file_path = os.path.join(package_path, file_path)
 
-    try:
-        with open(absolute_file_path) as file:
-            return yaml.safe_load(file)
-    except OSError:  # parent of IOError, OSError *and* WindowsError where available
-        return None
+#     try:
+#         with open(absolute_file_path) as file:
+#             return yaml.safe_load(file)
+#     except OSError:  # parent of IOError, OSError *and* WindowsError where available
+#         return None
 def launch_setup(context,*args,**kwargs):
     alice_ur_type = LaunchConfiguration("alice_ur_type")
     bob_ur_type = LaunchConfiguration("bob_ur_type")
@@ -157,7 +158,7 @@ def launch_setup(context,*args,**kwargs):
         "moveit_manage_controllers": False,
         "trajectory_execution.allowed_execution_duration_scaling": 1.2,
         "trajectory_execution.allowed_goal_duration_margin": 0.5,
-        "trajectory_execution.allowed_start_tolerance": 0.01,
+        "trajectory_execution.allowed_start_tolerance": 0.1,
     }
 
     planning_scene_monitor_parameters = {
@@ -242,8 +243,8 @@ def launch_setup(context,*args,**kwargs):
     nodes_to_start = [
         rviz_node,
         move_group_node,
-        alice_servo_node,
-        bob_servo_node,
+        # alice_servo_node,
+        # bob_servo_node,
     ]
 
     return nodes_to_start

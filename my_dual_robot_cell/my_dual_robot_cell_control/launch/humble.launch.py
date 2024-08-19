@@ -189,12 +189,12 @@ def launch_setup(context,*args,**kwargs):
     controllers_active = [
         "alice_joint_state_broadcaster",
         "bob_joint_state_broadcaster",
-        "alice_io_and_status_controller",
-        "bob_io_and_status_controller",
-        "alice_speed_scaling_state_broadcaster",
-        "bob_speed_scaling_state_broadcaster",
-        "alice_force_torque_sensor_broadcaster",
-        "bob_force_torque_sensor_broadcaster",
+        # "alice_io_and_status_controller",
+        # "bob_io_and_status_controller",
+        # "alice_speed_scaling_state_broadcaster",
+        # "bob_speed_scaling_state_broadcaster",
+        # "alice_force_torque_sensor_broadcaster",
+        # "bob_force_torque_sensor_broadcaster",
     ]
     controllers_inactive = [
         "alice_forward_position_controller",
@@ -328,9 +328,10 @@ def generate_launch_description():
             "alice_kinematics_parameters_file",
             default_value=PathJoinSubstitution(
                 [
-                    FindPackageShare("my_dual_robot_cell_control"),
+                    FindPackageShare("ur_description"),
                     "config",
-                    "alice_calibration.yaml",
+                    LaunchConfiguration("alice_ur_type"),
+                    "default_kinematics.yaml",
                 ]
             ),
             description="The calibration configuration of the actual robot used.",
@@ -341,9 +342,10 @@ def generate_launch_description():
             "bob_kinematics_parameters_file",
             default_value=PathJoinSubstitution(
                 [
-                    FindPackageShare("my_dual_robot_cell_control"),
+                    FindPackageShare("ur_description"),
                     "config",
-                    "bob_calibration.yaml",
+                    LaunchConfiguration("bob_ur_type"),
+                    "default_kinematics.yaml",
                 ]
             ),
             description="The calibration configuration of the actual robot used.",

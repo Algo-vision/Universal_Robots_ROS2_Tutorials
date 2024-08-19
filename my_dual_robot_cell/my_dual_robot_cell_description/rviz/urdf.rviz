@@ -53,120 +53,120 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        alice_base:
+        robot2_base:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        alice_base_link:
+        robot2_base_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        alice_base_link_inertia:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        alice_flange:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        alice_forearm_link:
+        robot2_base_link_inertia:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        alice_ft_frame:
+        robot2_flange:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        alice_robot_mount:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        alice_shoulder_link:
+        robot2_forearm_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        alice_tool0:
+        robot2_ft_frame:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        alice_upper_arm_link:
+        robot2_robot_mount:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-          Value: true
-        alice_wrist_1_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        alice_wrist_2_link:
+        robot2_shoulder_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        alice_wrist_3_link:
+        robot2_tool0:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        robot2_upper_arm_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        bob_base:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        bob_base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        bob_base_link_inertia:
+        robot2_wrist_1_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        bob_flange:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        bob_forearm_link:
+        robot2_wrist_2_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        bob_ft_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        bob_robot_mount:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        bob_shoulder_link:
+        robot2_wrist_3_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        bob_tool0:
+        robot1_base:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        bob_upper_arm_link:
+        robot1_base_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-          Value: true
-        bob_wrist_1_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        bob_wrist_2_link:
+        robot1_base_link_inertia:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        bob_wrist_3_link:
+        robot1_flange:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        robot1_forearm_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        robot1_ft_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        robot1_robot_mount:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        robot1_shoulder_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        robot1_tool0:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        robot1_upper_arm_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        robot1_wrist_1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        robot1_wrist_2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        robot1_wrist_3_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -203,57 +203,57 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        alice_base:
+        robot2_base:
           Value: true
-        alice_base_link:
+        robot2_base_link:
           Value: true
-        alice_base_link_inertia:
+        robot2_base_link_inertia:
           Value: true
-        alice_flange:
+        robot2_flange:
           Value: true
-        alice_forearm_link:
+        robot2_forearm_link:
           Value: true
-        alice_ft_frame:
+        robot2_ft_frame:
           Value: true
-        alice_robot_mount:
+        robot2_robot_mount:
           Value: true
-        alice_shoulder_link:
+        robot2_shoulder_link:
           Value: true
-        alice_tool0:
+        robot2_tool0:
           Value: true
-        alice_upper_arm_link:
+        robot2_upper_arm_link:
           Value: true
-        alice_wrist_1_link:
+        robot2_wrist_1_link:
           Value: true
-        alice_wrist_2_link:
+        robot2_wrist_2_link:
           Value: true
-        alice_wrist_3_link:
+        robot2_wrist_3_link:
           Value: true
-        bob_base:
+        robot1_base:
           Value: true
-        bob_base_link:
+        robot1_base_link:
           Value: true
-        bob_base_link_inertia:
+        robot1_base_link_inertia:
           Value: true
-        bob_flange:
+        robot1_flange:
           Value: true
-        bob_forearm_link:
+        robot1_forearm_link:
           Value: true
-        bob_ft_frame:
+        robot1_ft_frame:
           Value: true
-        bob_robot_mount:
+        robot1_robot_mount:
           Value: true
-        bob_shoulder_link:
+        robot1_shoulder_link:
           Value: true
-        bob_tool0:
+        robot1_tool0:
           Value: true
-        bob_upper_arm_link:
+        robot1_upper_arm_link:
           Value: true
-        bob_wrist_1_link:
+        robot1_wrist_1_link:
           Value: true
-        bob_wrist_2_link:
+        robot1_wrist_2_link:
           Value: true
-        bob_wrist_3_link:
+        robot1_wrist_3_link:
           Value: true
         monitor:
           Value: true
@@ -271,37 +271,37 @@ Visualization Manager:
       Tree:
         world:
           table:
-            alice_robot_mount:
-              alice_base_link:
-                alice_base:
+            robot2_robot_mount:
+              robot2_base_link:
+                robot2_base:
                   {}
-                alice_base_link_inertia:
-                  alice_shoulder_link:
-                    alice_upper_arm_link:
-                      alice_forearm_link:
-                        alice_wrist_1_link:
-                          alice_wrist_2_link:
-                            alice_wrist_3_link:
-                              alice_flange:
-                                alice_tool0:
+                robot2_base_link_inertia:
+                  robot2_shoulder_link:
+                    robot2_upper_arm_link:
+                      robot2_forearm_link:
+                        robot2_wrist_1_link:
+                          robot2_wrist_2_link:
+                            robot2_wrist_3_link:
+                              robot2_flange:
+                                robot2_tool0:
                                   {}
-                              alice_ft_frame:
+                              robot2_ft_frame:
                                 {}
-            bob_robot_mount:
-              bob_base_link:
-                bob_base:
+            robot1_robot_mount:
+              robot1_base_link:
+                robot1_base:
                   {}
-                bob_base_link_inertia:
-                  bob_shoulder_link:
-                    bob_upper_arm_link:
-                      bob_forearm_link:
-                        bob_wrist_1_link:
-                          bob_wrist_2_link:
-                            bob_wrist_3_link:
-                              bob_flange:
-                                bob_tool0:
+                robot1_base_link_inertia:
+                  robot1_shoulder_link:
+                    robot1_upper_arm_link:
+                      robot1_forearm_link:
+                        robot1_wrist_1_link:
+                          robot1_wrist_2_link:
+                            robot1_wrist_3_link:
+                              robot1_flange:
+                                robot1_tool0:
                                   {}
-                              bob_ft_frame:
+                              robot1_ft_frame:
                                 {}
             monitor:
               {}

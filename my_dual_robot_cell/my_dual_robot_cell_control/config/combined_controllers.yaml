@@ -1,72 +1,72 @@
 controller_manager:
   ros__parameters:
-    alice_joint_state_broadcaster:
+    robot2_joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
-    bob_joint_state_broadcaster:
+    robot1_joint_state_broadcaster:
       type: joint_state_broadcaster/JointStateBroadcaster
 
-    alice_io_and_status_controller:
+    robot2_io_and_status_controller:
       type: ur_controllers/GPIOController
   
-    bob_io_and_status_controller:
+    robot1_io_and_status_controller:
       type: ur_controllers/GPIOController
 
-    alice_speed_scaling_state_broadcaster:
+    robot2_speed_scaling_state_broadcaster:
       type: ur_controllers/SpeedScalingStateBroadcaster
     
-    bob_speed_scaling_state_broadcaster:
+    robot1_speed_scaling_state_broadcaster:
       type: ur_controllers/SpeedScalingStateBroadcaster
 
-    alice_force_torque_sensor_broadcaster:
+    robot2_force_torque_sensor_broadcaster:
       type: force_torque_sensor_broadcaster/ForceTorqueSensorBroadcaster
 
-    bob_force_torque_sensor_broadcaster:
+    robot1_force_torque_sensor_broadcaster:
       type: force_torque_sensor_broadcaster/ForceTorqueSensorBroadcaster
 
-    alice_joint_trajectory_controller:
+    robot2_joint_trajectory_controller:
       type: joint_trajectory_controller/JointTrajectoryController
   
-    bob_trajectory_controller:
+    robot1_trajectory_controller:
       type: joint_trajectory_controller/JointTrajectoryController
 
-    alice_scaled_joint_trajectory_controller:
+    robot2_scaled_joint_trajectory_controller:
       type: ur_controllers/ScaledJointTrajectoryController
 
-    bob_scaled_joint_trajectory_controller:
+    robot1_scaled_joint_trajectory_controller:
       type: ur_controllers/ScaledJointTrajectoryController
 
     forward_velocity_controller:
       type: velocity_controllers/JointGroupVelocityController
 
-    alice_forward_position_controller:
+    robot2_forward_position_controller:
       type: position_controllers/JointGroupPositionController
   
-    bob_forward_position_controller:
+    robot1_forward_position_controller:
       type: position_controllers/JointGroupPositionController
 
 
-alice_speed_scaling_state_broadcaster:
+robot2_speed_scaling_state_broadcaster:
   ros__parameters:
     state_publish_rate: 100.0
-    tf_prefix: "alice_"
+    tf_prefix: "robot2_"
   
-bob_speed_scaling_state_broadcaster:
+robot1_speed_scaling_state_broadcaster:
   ros__parameters:
     state_publish_rate: 100.0
-    tf_prefix: "bob_"
+    tf_prefix: "robot1_"
 
-alice_io_and_status_controller:
+robot2_io_and_status_controller:
   ros__parameters:
-    tf_prefix: "alice_"
+    tf_prefix: "robot2_"
 
-bob_io_and_status_controller:
+robot1_io_and_status_controller:
   ros__parameters:
-    tf_prefix: "bob_"
+    tf_prefix: "robot1_"
 
-alice_force_torque_sensor_broadcaster:
+robot2_force_torque_sensor_broadcaster:
   ros__parameters:
-    sensor_name: alice_tcp_fts_sensor
+    sensor_name: robot2_tcp_fts_sensor
     state_interface_names:
       - force.x
       - force.y
@@ -74,12 +74,12 @@ alice_force_torque_sensor_broadcaster:
       - torque.x
       - torque.y
       - torque.z
-    frame_id: bob_tool0
-    topic_name: alice_ft_data
+    frame_id: robot1_tool0
+    topic_name: robot2_ft_data
 
-bob_force_torque_sensor_broadcaster:
+robot1_force_torque_sensor_broadcaster:
   ros__parameters:
-    sensor_name: bob_tcp_fts_sensor
+    sensor_name: robot1_tcp_fts_sensor
     state_interface_names:
       - force.x
       - force.y
@@ -87,19 +87,19 @@ bob_force_torque_sensor_broadcaster:
       - torque.x
       - torque.y
       - torque.z
-    frame_id: bob_tool0
-    topic_name: bob_ft_data
+    frame_id: robot1_tool0
+    topic_name: robot1_ft_data
 
 
-alice_joint_trajectory_controller:
+robot2_joint_trajectory_controller:
   ros__parameters:
     joints:
-      - alice_shoulder_pan_joint
-      - alice_shoulder_lift_joint
-      - alice_elbow_joint
-      - alice_wrist_1_joint
-      - alice_wrist_2_joint
-      - alice_wrist_3_joint
+      - robot2_shoulder_pan_joint
+      - robot2_shoulder_lift_joint
+      - robot2_elbow_joint
+      - robot2_wrist_1_joint
+      - robot2_wrist_2_joint
+      - robot2_wrist_3_joint
     command_interfaces:
       - position
     state_interfaces:
@@ -111,22 +111,22 @@ alice_joint_trajectory_controller:
     constraints:
       stopped_velocity_tolerance: 0.2
       goal_time: 0.0
-      alice_shoulder_pan_joint: { trajectory: 0.2, goal: 0.1 }
-      alice_shoulder_lift_joint: { trajectory: 0.2, goal: 0.1 }
-      alice_elbow_joint: { trajectory: 0.2, goal: 0.1 }
-      alice_wrist_1_joint: { trajectory: 0.2, goal: 0.1 }
-      alice_wrist_2_joint: { trajectory: 0.2, goal: 0.1 }
-      alice_wrist_3_joint: { trajectory: 0.2, goal: 0.1 }
+      robot2_shoulder_pan_joint: { trajectory: 0.2, goal: 0.1 }
+      robot2_shoulder_lift_joint: { trajectory: 0.2, goal: 0.1 }
+      robot2_elbow_joint: { trajectory: 0.2, goal: 0.1 }
+      robot2_wrist_1_joint: { trajectory: 0.2, goal: 0.1 }
+      robot2_wrist_2_joint: { trajectory: 0.2, goal: 0.1 }
+      robot2_wrist_3_joint: { trajectory: 0.2, goal: 0.1 }
   
-bob_joint_trajectory_controller:
+robot1_joint_trajectory_controller:
   ros__parameters:
     joints:
-      - bob_shoulder_pan_joint
-      - bob_shoulder_lift_joint
-      - bob_elbow_joint
-      - bob_wrist_1_joint
-      - bob_wrist_2_joint
-      - bob_wrist_3_joint
+      - robot1_shoulder_pan_joint
+      - robot1_shoulder_lift_joint
+      - robot1_elbow_joint
+      - robot1_wrist_1_joint
+      - robot1_wrist_2_joint
+      - robot1_wrist_3_joint
     command_interfaces:
       - position
     state_interfaces:
@@ -138,22 +138,22 @@ bob_joint_trajectory_controller:
     constraints:
       stopped_velocity_tolerance: 0.2
       goal_time: 0.0
-      bob_shoulder_pan_joint: { trajectory: 0.2, goal: 0.1 }
-      bob_shoulder_lift_joint: { trajectory: 0.2, goal: 0.1 }
-      bob_elbow_joint: { trajectory: 0.2, goal: 0.1 }
-      bob_wrist_1_joint: { trajectory: 0.2, goal: 0.1 }
-      bob_wrist_2_joint: { trajectory: 0.2, goal: 0.1 }
-      bob_wrist_3_joint: { trajectory: 0.2, goal: 0.1 }
+      robot1_shoulder_pan_joint: { trajectory: 0.2, goal: 0.1 }
+      robot1_shoulder_lift_joint: { trajectory: 0.2, goal: 0.1 }
+      robot1_elbow_joint: { trajectory: 0.2, goal: 0.1 }
+      robot1_wrist_1_joint: { trajectory: 0.2, goal: 0.1 }
+      robot1_wrist_2_joint: { trajectory: 0.2, goal: 0.1 }
+      robot1_wrist_3_joint: { trajectory: 0.2, goal: 0.1 }
 
-alice_scaled_joint_trajectory_controller:
+robot2_scaled_joint_trajectory_controller:
   ros__parameters:
     joints:
-      - alice_shoulder_pan_joint
-      - alice_shoulder_lift_joint
-      - alice_elbow_joint
-      - alice_wrist_1_joint
-      - alice_wrist_2_joint
-      - alice_wrist_3_joint
+      - robot2_shoulder_pan_joint
+      - robot2_shoulder_lift_joint
+      - robot2_elbow_joint
+      - robot2_wrist_1_joint
+      - robot2_wrist_2_joint
+      - robot2_wrist_3_joint
     command_interfaces:
       - position
     state_interfaces:
@@ -165,23 +165,23 @@ alice_scaled_joint_trajectory_controller:
     constraints:
       stopped_velocity_tolerance: 0.2
       goal_time: 0.0
-      alice_shoulder_pan_joint: { trajectory: 0.2, goal: 0.1 }
-      alice_shoulder_lift_joint: { trajectory: 0.2, goal: 0.1 }
-      alice_elbow_joint: { trajectory: 0.2, goal: 0.1 }
-      alice_wrist_1_joint: { trajectory: 0.2, goal: 0.1 }
-      alice_wrist_2_joint: { trajectory: 0.2, goal: 0.1 }
-      alice_wrist_3_joint: { trajectory: 0.2, goal: 0.1 }
-    speed_scaling_interface_name: alice_speed_scaling/speed_scaling_factor
+      robot2_shoulder_pan_joint: { trajectory: 0.2, goal: 0.1 }
+      robot2_shoulder_lift_joint: { trajectory: 0.2, goal: 0.1 }
+      robot2_elbow_joint: { trajectory: 0.2, goal: 0.1 }
+      robot2_wrist_1_joint: { trajectory: 0.2, goal: 0.1 }
+      robot2_wrist_2_joint: { trajectory: 0.2, goal: 0.1 }
+      robot2_wrist_3_joint: { trajectory: 0.2, goal: 0.1 }
+    speed_scaling_interface_name: robot2_speed_scaling/speed_scaling_factor
 
-bob_scaled_joint_trajectory_controller:
+robot1_scaled_joint_trajectory_controller:
   ros__parameters:
     joints:
-      - bob_shoulder_pan_joint
-      - bob_shoulder_lift_joint
-      - bob_elbow_joint
-      - bob_wrist_1_joint
-      - bob_wrist_2_joint
-      - bob_wrist_3_joint
+      - robot1_shoulder_pan_joint
+      - robot1_shoulder_lift_joint
+      - robot1_elbow_joint
+      - robot1_wrist_1_joint
+      - robot1_wrist_2_joint
+      - robot1_wrist_3_joint
     command_interfaces:
       - position
     state_interfaces:
@@ -193,52 +193,52 @@ bob_scaled_joint_trajectory_controller:
     constraints:
       stopped_velocity_tolerance: 0.2
       goal_time: 0.0
-      bob_shoulder_pan_joint: { trajectory: 0.2, goal: 0.1 }
-      bob_shoulder_lift_joint: { trajectory: 0.2, goal: 0.1 }
-      bob_elbow_joint: { trajectory: 0.2, goal: 0.1 }
-      bob_wrist_1_joint: { trajectory: 0.2, goal: 0.1 }
-      bob_wrist_2_joint: { trajectory: 0.2, goal: 0.1 }
-      bob_wrist_3_joint: { trajectory: 0.2, goal: 0.1 }
-    speed_scaling_interface_name: bob_speed_scaling/speed_scaling_factor
+      robot1_shoulder_pan_joint: { trajectory: 0.2, goal: 0.1 }
+      robot1_shoulder_lift_joint: { trajectory: 0.2, goal: 0.1 }
+      robot1_elbow_joint: { trajectory: 0.2, goal: 0.1 }
+      robot1_wrist_1_joint: { trajectory: 0.2, goal: 0.1 }
+      robot1_wrist_2_joint: { trajectory: 0.2, goal: 0.1 }
+      robot1_wrist_3_joint: { trajectory: 0.2, goal: 0.1 }
+    speed_scaling_interface_name: robot1_speed_scaling/speed_scaling_factor
 
-alice_forward_velocity_controller:
+robot2_forward_velocity_controller:
   ros__parameters:
     joints:
-      - alice_shoulder_pan_joint
-      - alice_shoulder_lift_joint
-      - alice_elbow_joint
-      - alice_wrist_1_joint
-      - alice_wrist_2_joint
-      - alice_wrist_3_joint
+      - robot2_shoulder_pan_joint
+      - robot2_shoulder_lift_joint
+      - robot2_elbow_joint
+      - robot2_wrist_1_joint
+      - robot2_wrist_2_joint
+      - robot2_wrist_3_joint
     interface_name: velocity
 
-bob_forward_velocity_controller:
+robot1_forward_velocity_controller:
   ros__parameters:
     joints:
-      - bob_shoulder_pan_joint
-      - bob_shoulder_lift_joint
-      - bob_elbow_joint
-      - bob_wrist_1_joint
-      - bob_wrist_2_joint
-      - bob_wrist_3_joint
+      - robot1_shoulder_pan_joint
+      - robot1_shoulder_lift_joint
+      - robot1_elbow_joint
+      - robot1_wrist_1_joint
+      - robot1_wrist_2_joint
+      - robot1_wrist_3_joint
     interface_name: velocity
 
-alice_forward_position_controller:
+robot2_forward_position_controller:
   ros__parameters:
     joints:
-      - alice_shoulder_pan_joint
-      - alice_shoulder_lift_joint
-      - alice_elbow_joint
-      - alice_wrist_1_joint
-      - alice_wrist_2_joint
-      - alice_wrist_3_joint
+      - robot2_shoulder_pan_joint
+      - robot2_shoulder_lift_joint
+      - robot2_elbow_joint
+      - robot2_wrist_1_joint
+      - robot2_wrist_2_joint
+      - robot2_wrist_3_joint
 
-bob_forward_position_controller:
+robot1_forward_position_controller:
   ros__parameters:
     joints:
-      - bob_shoulder_pan_joint
-      - bob_shoulder_lift_joint
-      - bob_elbow_joint
-      - bob_wrist_1_joint
-      - bob_wrist_2_joint
-      - bob_wrist_3_joint
+      - robot1_shoulder_pan_joint
+      - robot1_shoulder_lift_joint
+      - robot1_elbow_joint
+      - robot1_wrist_1_joint
+      - robot1_wrist_2_joint
+      - robot1_wrist_3_joint

@@ -20,10 +20,10 @@ def generate_launch_description():
                 "xacro ",
                 description_file,
                 " ",
-                "alice_ur_type:=",
+                "robot2_ur_type:=",
                 "ur5",
                 " ",
-                "bob_ur_type:=",
+                "robot1_ur_type:=",
                 "ur5",
             ]
         ),

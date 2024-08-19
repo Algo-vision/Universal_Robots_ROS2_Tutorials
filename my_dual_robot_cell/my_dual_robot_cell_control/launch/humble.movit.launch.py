@@ -200,6 +200,7 @@ def launch_setup(context,*args,**kwargs):
     alice_servo_node = Node(
         package="moveit_servo",
         executable="servo_node_main",
+        name="alice_moveit_servo",
         parameters=[
             alice_servo_params,
             robot_description,
@@ -213,6 +214,7 @@ def launch_setup(context,*args,**kwargs):
     bob_servo_node = Node(
         package="moveit_servo",
         executable="servo_node_main",
+        name="bob_moveit_servo",
         parameters=[
             bob_servo_params,
             robot_description,
@@ -243,8 +245,8 @@ def launch_setup(context,*args,**kwargs):
     nodes_to_start = [
         rviz_node,
         move_group_node,
-        # alice_servo_node,
-        # bob_servo_node,
+        alice_servo_node,
+        bob_servo_node,
     ]
 
     return nodes_to_start
@@ -291,14 +293,14 @@ def generate_launch_description():
     declared_arguments.append(
         DeclareLaunchArgument(
             "alice_robot_ip",
-            default_value="192.168.56.102",
+            default_value="192.168.1.102",
             description="IP address by which the robot can be reached.",
         )
     )
     declared_arguments.append(
         DeclareLaunchArgument(
             "bob_robot_ip",
-            default_value="192.168.56.101",
+            default_value="192.168.1.103",
             description="IP address by which the robot can be reached.",
         )
     )
